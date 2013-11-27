@@ -61,6 +61,7 @@ class admin extends MY_Controller {
 			$this->db->select();
 			$this->db->from('transaction');
 			$this->db->join('user', 'user.user_ID = transaction.transaction_user', 'left');
+			$this->db->where('transaction.transaction_status !=', 'done' );
 			$this->db->order_by('transaction_ID', 'asc');
 			$query 	= $this->db->get();
 			$row 	= $query->result();
@@ -83,8 +84,12 @@ class admin extends MY_Controller {
 			$this->data['order_detail'] = json_decode(json_encode($query->result()), true);
 			$query = $this->db->get('order_status');
 			$this->data['stat'] = json_decode(json_encode($query->result()), true);
-			//echo '<pre>'; print_r($this->data['stat']); exit;
-			$this->load->adminTemplate('admin/order_detail', $this->data);
+			//echo '<pre>'; print_r($this->data['order_detail']); exit;
+			if(empty($this->data['order_detail'])) {
+				redirect('/admin/orders','refresh');
+			} else {
+				$this->load->adminTemplate('admin/order_detail', $this->data);
+			}
 		}
 	}
 	public function users($action ='list', $ID = 0) {
@@ -185,6 +190,16 @@ class admin extends MY_Controller {
 		$this->db->update('transaction', array('transaction_status' => $_POST['transaction_status']));
 		 
    		redirect('admin/orders/detail/'.$ID, 'refresh');
+	}
+	
+	public function usersEdit($ID) {
+		
+		$_POST['enable'] = isset($_POST['enable'])  ? 1 : 0;
+		
+		$this->db->where('user_ID', $ID);
+		$this->db->update('user', $_POST);
+		 
+   		redirect('admin/users/edit/'.$ID, 'refresh');
 	}
 	
 	public function editProduct($ID) {

@@ -161,15 +161,15 @@
 <?php $remove = base_url().'admin/users/remove/'; ?>
 <?php foreach((array)$row as $key => $value): ?>
 	<tr>
-      <td><?php echo $value['firstname'].' '.$value['surname']; ?></td>
-      <td><?php echo $value['email']; ?></td>
-      <td><?php echo $value['city']?></td>
+      <td><?php echo isset($value['name']) & !empty($value['name'])  ? $value['name'] : 'N/A'; ?></td>
+      <td><?php echo isset($value['email']) & !empty($value['email'])? $value['email'] : 'N/A';; ?></td>
+      <td><?php echo isset($value['city']) & !empty($value['city'])? $value['city'] : 'N/A';?></td>
       <td class="center">
-      	<!--<a href="<?php echo $view.$value['id']; ?>" class="btn btn-mini btn-default">
+      	<!--<a href="<?php echo $view.$value['user_ID']; ?>" class="btn btn-mini btn-default">
         	<i class="icon-zoom-in"></i> View</a>-->
-      	<a href="<?php echo $edit.$value['id']; ?>" class="btn btn-mini btn-black">
+      	<a href="<?php echo $edit.$value['user_ID']; ?>" class="btn btn-mini btn-black">
         	<i class="icon-edit"></i> Edit</a>
-      	<a href="<?php echo $remove.$value['id']; ?>" class="btn btn-mini btn-red">
+      	<a href="<?php echo $remove.$value['user_ID']; ?>" class="btn btn-mini btn-red">
         	<i class="icon-remove"></i> Remove</a>
       </td>
     </tr>

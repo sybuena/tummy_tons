@@ -46,7 +46,7 @@ Class User extends CI_Model {
 	}
 	
 	public function getDetail($ID) {
-		$query = $this->db->get_where('user', array('id' => $ID));
+		$query = $this->db->get_where('user', array('user_id' => $ID));
 		return min(array_values($query->result()));	
 	}
 }
